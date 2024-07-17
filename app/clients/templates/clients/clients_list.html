@@ -1,0 +1,26 @@
+{% comment %} Generate an HTML file which lists the clients {% endcomment %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clients</title>
+</head>
+<body>
+    <h1>Clients</h1>
+    <ul>
+        {% for client in clients %}
+            <li>{{ client.name }}</li>
+        {% empty %}
+            <li>No clients found</li>
+        {% endfor %}
+    </ul>
+
+    <hr />
+
+    <h2>Create Client</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{form.errors}}
+        {{form.as_p}}
+        <button type="submit">Create</button>
+    </form>
+</body>
