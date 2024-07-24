@@ -15,5 +15,5 @@ WORKDIR /app/app
 
 EXPOSE 8000
 ENTRYPOINT ["/app/app/bin/entrypoint.sh"]
-HEALTHCHECK --interval=30s --retries=3 --timeout=3s CMD curl --fail http://localhost:$PORT/ || exit 1
+HEALTHCHECK --interval=30s --retries=3 --timeout=3s CMD curl --fail http://localhost:$PORT/health-check/ || exit 1
 CMD ["gunicorn", "mysite.wsgi"]
