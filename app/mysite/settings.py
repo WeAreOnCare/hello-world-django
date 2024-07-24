@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 import dj_database_url
+import requests
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +29,19 @@ SECRET_KEY = "django-insecure-kov&di#75)@b-f1ipd$cw66zzkvne)lqvvfv7_a^4(y!9e4dan
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "0.0.0.0",
+    "localhost",
+    ".execute-api.eu-west-1.amazonaws.com",
+    ".weareoncare.com",
+]
+
+# AWS IP range
+METADATA_URI = os.environ.get("ECS_CONTAINER_METADATA_URI")
+if METADATA_URI:
+    container_metadata = requests.get(METADATA_URI).json()
+    ALLOWED_HOSTS.append(container_metadata["Networks"][0]["IPv4Addresses"][0])
 
 
 # Application definition
